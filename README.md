@@ -26,7 +26,7 @@ A aplicação utiliza as tecnologias mais eficientes do mercado atual:
 - **Persistência / Banco de Dados NoSQL:** [Apache Cassandra](https://cassandra.apache.org/) (`cassandra-driver`) 
 - **Cache in-memory:** [Redis](https://redis.io/)
 - **Infraestrutura e Contêineres:** Docker, Docker Compose
-- **Segurança e Validação:** `helmet`, `class-validator`, `class-transformer`
+- **Segurança e Validação:** `helmet`, `class-validator`, `class-transformer`, `throttler`
 
 ## 📡 Endpoints
 
