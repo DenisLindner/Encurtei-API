@@ -3,5 +3,5 @@ import { IsNotEmpty, IsUrl } from 'class-validator';
 export class CreateLinkDTO {
   @IsUrl()
   @IsNotEmpty()
-  orignalUrl: string;
+  originalUrl: string;
 }
