@@ -10,12 +10,14 @@ import {
 import { LinksService } from './links.service';
 import { CreateLinkDTO } from './dto/create-link.dto';
 import type { Request } from 'express';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller()
 export class LinksController {
   constructor(private readonly service: LinksService) {}
 
   @Post()
+  @Throttle({ default: { ttl: 60000, limit: 4 } })
   async createLink(@Body() dto: CreateLinkDTO, @Req() req: Request) {
     const shortCode = await this.service.create(dto);
     const url = `${req.protocol}://${req.get('host')}/${shortCode}`;
