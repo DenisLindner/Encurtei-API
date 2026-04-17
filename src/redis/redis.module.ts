@@ -6,11 +6,17 @@ import Redis from 'ioredis';
   providers: [
     {
       provide: 'REDIS_CLIENT',
-      useFactory: () => {
-        return new Redis({
+      useFactory: async () => {
+        const redis = new Redis({
           host: process.env.REDIS_HOST ?? 'localhost',
           port: Number(process.env.REDIS_PORT ?? 6379),
         });
+        const counter = await redis.get('url_id_counter');
+        if (!counter) {
+          await redis.set('url_id_counter', 80000);
+        }
+
+        return redis;
       },
     },
   ],
