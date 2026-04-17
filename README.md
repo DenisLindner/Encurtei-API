@@ -35,7 +35,8 @@ O servidor expõe portas otimizadas para processar os payloads curtos com imensa
 ### 1. Criar novo link encurtado
 `POST /`
 
-Recebe a URL a ser encurtada e devolve o acesso em formato short link.
+Recebe a URL a ser encurtada e devolve o acesso gerado em formato JSON.
+> **Segurança**: Este endpoint possui Rate Limiting (limite de 4 requisições por minuto por IP) para prevenir abusos.
 
 **Body (JSON) esperado:**
 ```json
@@ -44,14 +45,16 @@ Recebe a URL a ser encurtada e devolve o acesso em formato short link.
 }
 ```
 **Retorno exemplo:**
-```text
-http://localhost:3000/aB3x9Z
+```json
+{
+  "shortUrl": "aB3x9Z"
+}
 ```
 
-### 2. Redirecionar para o link original
+### 2. Buscar o link original
 `GET /:code`
 
-Recebe o código gerado no Path Param. Busca ativamente pelo link original no Redis (fallback no Cassandra) e redireciona (HTTP 302).
+Recebe o código gerado no Path Param. Busca ativamente pelo link original no Redis (fallback no Cassandra) e, para garantir máxima performance de comunicação via interface cliente, retorna os dados em formato JSON (a interface assume o redirecionamento).
 
 ## 🚀 Como Rodar
 
@@ -93,7 +96,7 @@ Este projeto depende de instâncias ativas do Redis e Cassandra. O projeto prov�
    npm run start:dev
    ```
 
-*(A API estará escutando e aceitando as requisições na porta padrão do seu `.env`, que normalmente é a `3000`)*.
+*(A API estará escutando e aceitando as requisições na porta padrão configurada no seu `.env`, que tem base no Node na porta `3333`)*.
 
 ---
 
